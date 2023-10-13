@@ -6,8 +6,8 @@ public class UserDetailsReqModel {
 	private String lastName;
 	private String email;
 	private String password;
-	
-	
+
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -32,6 +32,6 @@ public class UserDetailsReqModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+
 }

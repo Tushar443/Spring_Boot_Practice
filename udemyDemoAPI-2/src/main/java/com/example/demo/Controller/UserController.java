@@ -15,43 +15,42 @@ import com.example.demo.ws.shared.dto.UserDto;
 import com.example.demo.ws.ui.model.request.UserDetailsReqModel;
 import com.example.demo.ws.ui.model.response.UserRest;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
-
 @RestController
+@RequestMapping("users")
 public class UserController {
 
 	@Autowired
 	UserService userSerivce;
-	
+
 	@RequestMapping("/")
 	public String getUser() {
 		return "Hello World!!!";
 	}
-	
+
 	@GetMapping
 	public String getUser2() {
 		return "get user 2 called";
 	}
-	
+
 	@PostMapping
 	public UserRest addUser(@RequestBody UserDetailsReqModel userDetails) {
 		UserRest userRest = new UserRest();
-		
+
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);
-		
+
 		UserDto createUser = userSerivce.createUser(userDto);
 		BeanUtils.copyProperties(createUser, userRest);
-		
-		
+
+
 		return userRest;
 	}
-	
-	@DeleteMapping 
+
+	@DeleteMapping
 	public String deleteUser() {
 		return "delete user called";
 	}
-	
+
 	@PutMapping
 	public String updateUser() {
 		return "update user called";
