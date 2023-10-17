@@ -3,6 +3,7 @@ package com.example.demo.Security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,6 +17,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.demo.ws.Service.UserService;
+
+import jakarta.annotation.security.PermitAll;
 
 @Configuration
 @EnableWebSecurity
@@ -49,24 +52,10 @@ public class WebSecurity  extends WebSecurityConfiguration{
 		return new BCryptPasswordEncoder();
 	}
 	
-	
+	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
+		http.authorizeHttpRequests((authz)-> authz.anyRequest().authenticated());
 		
-//		AuthenticationManagerBuilder authenticationManagerBuilder =
-//				http.getSharedObject(AuthenticationManagerBuilder.class);
-//		
-////		authenticationManagerBuilder.userDetailsService(userDetailsService)
-////		.passwordEncoder(bCryptPasswordEncoder);
-//
-////		AuthenticationManager authenticationManager =authenticationManagerBuilder.build();
-////		http.authenticationManager(authenticationManager);
-
-		
-		
-		http.csrf().disable().authorizeHttpRequests().requestMatchers("/users").permitAll()
-		.and().authorizeHttpRequests().
-		requestMatchers("/").authenticated().and().formLogin();
- 
 		
 		return http.build();
 		
