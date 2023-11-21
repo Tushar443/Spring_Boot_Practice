@@ -22,4 +22,22 @@ public class EmployeeDaoImple implements EmployeeDAO {
 		return theQuery.getResultList();
 	}
 
+	@Override
+	public Employee findById(int id) {
+		return entityM.find(Employee.class, id);
+	}
+
+	@Override
+	public Employee save(Employee emp) {
+		return entityM.merge(emp);
+	}
+
+	@Override
+	public Employee delete(int id) {
+		Employee dbEmp = findById(id);
+		
+		entityM.remove(dbEmp);
+		return dbEmp;
+	}
+
 }

@@ -1,4 +1,4 @@
-package com.example.employeeDir.restController;
+package com.example.employeeDirRepo.restController;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.employeeDir.dao.EmployeeDAO;
-import com.example.employeeDir.entity.Employee;
-import com.example.employeeDir.service.EmployeeService;
+import com.example.employeeDirRepo.entity.Employee;
+import com.example.employeeDirRepo.service.EmployeeService;
+import com.example.employeeDirRepo.service.FindByIdParameter;
 
 @RestController
 @RequestMapping("/api")
@@ -30,7 +30,7 @@ public class EmployeeRestController {
 	
 	@GetMapping("/emp/{empId}")
 	public Employee getEmployee(@PathVariable int empId){
-		Employee db = employeeService.findById(empId);
+		Employee db = employeeService.findById(new FindByIdParameter(empId));
 		if(db == null) {
 			throw new RuntimeException("Employee Id not found - "+empId);
 		}
@@ -52,14 +52,14 @@ public class EmployeeRestController {
 	}
 	
 	@DeleteMapping("/emp/{empId}")
-	public Employee deleteEmployee(@PathVariable int empId){
-		Employee dbEmp = employeeService.findById(empId);
+	public void deleteEmployee(@PathVariable int empId){
+		Employee dbEmp = employeeService.findById(new FindByIdParameter(empId));
 		
 		if(dbEmp==null) {
 			throw new RuntimeException("Employee Id not found - "+empId);
 		}
 		
-		return employeeService.delete(empId);
+		 employeeService.delete(empId);
 	}
 	
 }

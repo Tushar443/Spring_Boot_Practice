@@ -1,11 +1,11 @@
-package com.example.employeeDir.dao;
+package com.example.employeeDir.service;
 
 import java.util.List;
 
 import com.example.employeeDir.entity.Employee;
 
-public interface EmployeeDAO {
-
+public interface EmployeeService {
+	
 	List<Employee> findAll();
 	
 	Employee findById(int id);
@@ -13,4 +13,5 @@ public interface EmployeeDAO {
 	Employee save(Employee emp);
 	
 	Employee delete(int id);
+
 }
