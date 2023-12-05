@@ -14,52 +14,46 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.employeeDirRepo.entity.Employee;
 import com.example.employeeDirRepo.service.EmployeeService;
-import com.example.employeeDirRepo.service.FindByIdParameter;
 
 @RestController
 @RequestMapping("/api")
 public class EmployeeRestController {
 
-	@Autowired
-	private EmployeeService employeeService;
-	
-	@GetMapping("/emp")
-	public List<Employee> getEmployees(){
-		return employeeService.findAll();
-	}
-	
-	@GetMapping("/emp/{empId}")
-	public Employee getEmployee(@PathVariable int empId){
-		Employee db = employeeService.findById(new FindByIdParameter(empId));
-		if(db == null) {
-			throw new RuntimeException("Employee Id not found - "+empId);
-		}
-		return db;
-	}
-	
-	@PostMapping("/emp")
-	public Employee saveEmployee(@RequestBody Employee emp){
-		Employee dbEmployee = employeeService.save(emp);
-		return dbEmployee;
-	}
-	
-	@PutMapping("/emp")
-	public Employee updateEmployee(@RequestBody Employee emp){
-		
-		Employee dbEmp = employeeService.save(emp);
-		
-		return dbEmp;
-	}
-	
-	@DeleteMapping("/emp/{empId}")
-	public void deleteEmployee(@PathVariable int empId){
-		Employee dbEmp = employeeService.findById(new FindByIdParameter(empId));
-		
-		if(dbEmp==null) {
-			throw new RuntimeException("Employee Id not found - "+empId);
-		}
-		
-		 employeeService.delete(empId);
-	}
-	
+//	@Autowired
+//	private EmployeeService employeeService;
+//	
+//	@GetMapping("/emp")
+//	public List<Employee> getEmployees(){
+//		return employeeService.findAll();
+//	}
+//	
+//	@GetMapping("/emp/{empId}")
+//	public Employee getEmployee(@PathVariable int empId){
+//		Employee db = employeeService.findById(empId);
+//		if(db == null) {
+//			throw new RuntimeException("Employee Id not found - "+empId);
+//		}
+//		return db;
+//	}
+//	
+//	@PostMapping("/emp")
+//	public Employee saveEmployee(@RequestBody Employee emp){
+//		Employee dbEmployee = employeeService.save(emp);
+//		return dbEmployee;
+//	}
+//	
+//	@PutMapping("/emp")
+//	public Employee updateEmployee(@RequestBody Employee emp){
+//		
+//		Employee dbEmp = employeeService.save(emp);
+//		
+//		return dbEmp;
+//	}
+//	
+//	@DeleteMapping("/emp/{empId}")
+//	public void deleteEmployee(@PathVariable int empId){
+//		 employeeService.delete(empId);
+//		 System.out.println("Employyee deleted = "+empId);
+//	}
+//	
 }
