@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Home Page</title>
+</head>
+<body>
+<div>My App Authenticates</div>
+<h1>Love My Code</h1>
+
+<h3>Welcome to my Page More </h3>
+<!-- Roles -->
+<p>
+	User : <span sec:authentication="principal.username"></span>
+	<br/>
+	Roles : <span sec:authentication="principal.authorities"></span>
+</p>
+
+<!-- Add link -->
+<div sec:authorize="hasRole('MANAGER')">
+	<p>
+	<a th:href="@{/leaders}">LeaderShip</a>
+</p>
+</div>
+
+<div sec:authorize="hasRole('ADMIN')">
+	<p>
+	<a th:href="@{/system}">System</a>
+</p>
+</div>
+
+
+<form action="#" th:action="@{/logout}" method="post">
+	<input type="submit" value="Logout"/>
+</form>
+</body>
+</html>
