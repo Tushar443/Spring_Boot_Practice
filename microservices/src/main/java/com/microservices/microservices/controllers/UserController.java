@@ -1,11 +1,10 @@
 package com.microservices.microservices.controllers;
 
+import com.microservices.microservices.entity.ToDo;
 import com.microservices.microservices.entity.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -16,5 +15,9 @@ public class UserController {
     @GetMapping("/user")
     public User getUser(){
         return new User("tushar@gmail.com","Tushar","pwd");
+    }
+    @PostMapping("toDo")
+    public String todoInput(@Validated ToDo todo){
+        return "ToDo Description : " + todo.getDescription() + ", Todo Priority := "+todo.getPriority();
     }
 }
