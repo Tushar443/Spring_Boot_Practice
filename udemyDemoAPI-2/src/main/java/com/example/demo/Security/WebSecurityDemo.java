@@ -2,9 +2,6 @@ package com.example.demo.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
@@ -18,16 +15,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.demo.ws.Service.UserService;
 
-import jakarta.annotation.security.PermitAll;
-
 @Configuration
 @EnableWebSecurity
-public class WebSecurity  extends WebSecurityConfiguration{
+public class WebSecurityDemo extends WebSecurityConfiguration{
 	
 	private final UserService userDetailsService2;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	public WebSecurity(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public WebSecurityDemo(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		super();
 		this.userDetailsService2 = userDetailsService;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;

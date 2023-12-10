@@ -44,7 +44,7 @@ public class DemoUserSecurity {
 		return http.build();
 				
 	}
-	/*
+	/* We save this data in DB and lets JdbcUserDetailsManager handle the rest for us
 	@Bean
 	public InMemoryUserDetailsManager userDetailsManager() {
 		UserDetails john = org.springframework.security.core.userdetails.User.builder().username("John")

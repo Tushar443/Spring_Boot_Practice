@@ -12,7 +12,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/leaders")
-	public String getleaders() {
+	public String getLeaders() {
 		return "leaders";
 	}
 	
