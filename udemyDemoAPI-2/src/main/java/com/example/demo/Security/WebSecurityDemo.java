@@ -17,11 +17,11 @@ import com.example.demo.ws.Service.UserService;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityDemo extends WebSecurityConfiguration{
-	
+public class WebSecurityDemo{
+
 	private final UserService userDetailsService2;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	public WebSecurityDemo(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		super();
 		this.userDetailsService2 = userDetailsService;
@@ -30,29 +30,31 @@ public class WebSecurityDemo extends WebSecurityConfiguration{
 
 	@Bean
 	public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-		UserDetails admin = User.withUsername("tushar")
-								.password(encoder
-								.encode("1111"))
-								.roles("ADMIN")
-								.build();
-		UserDetails job = User.withUsername("ajay")
-							  .password(encoder.encode("1111"))
-							  .roles("USER")
-							  .build();
-	
-		return new InMemoryUserDetailsManager(admin,job);
-	}
-	
+        UserDetails john = org.springframework.security.core.userdetails.User.builder().username("John")
+                .password("{noop}test123").roles("EMPLOYEE").build();
+
+        UserDetails mary = org.springframework.security.core.userdetails.User.builder().username("Mary")
+                .password("{noop}test123").roles("EMPLOYEE", "MANAGER").build();
+
+        UserDetails susan = org.springframework.security.core.userdetails.User.builder().username("Susan")
+                .password("{noop}test123").roles("EMPLOYEE", "MANAGER", "ADMIN").build();
+
+        return new InMemoryUserDetailsManager(john, mary, susan);
+}
+
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
-		http.authorizeHttpRequests((authz)-> authz.anyRequest().authenticated());
-		
-		
-		return http.build();
-		
+        http.authorizeHttpRequests(configurer ->
+                        configurer
+                                .requestMatchers("/users/**").hasRole("EMPLOYEE")
+                                .anyRequest().authenticated()
+                );
+
+		http.formLogin(form-> form.permitAll());
+        return http.build();
 	}
 }
