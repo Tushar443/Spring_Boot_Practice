@@ -8,7 +8,7 @@ import com.example.demo.ws.io.Entity.UserEntity;
 @Repository
 public interface UserRepo extends CrudRepository<UserEntity, Long> {
 
-	UserEntity findByEmail(String email);
+	UserEntity findUserByEmail(String email);
 
 
 

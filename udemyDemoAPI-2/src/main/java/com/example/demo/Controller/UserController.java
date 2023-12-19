@@ -27,7 +27,7 @@ public class UserController {
 		return "Hello World!!!";
 	}
 
-	@GetMapping
+	@GetMapping("/showMyLogInPage")
 	public String getUser2() {
 		return "get user 2 called";
 	}
@@ -35,14 +35,10 @@ public class UserController {
 	@PostMapping
 	public UserRest addUser(@RequestBody UserDetailsReqModel userDetails) {
 		UserRest userRest = new UserRest();
-
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);
-
 		UserDto createUser = userSerivce.createUser(userDto);
 		BeanUtils.copyProperties(createUser, userRest);
-
-
 		return userRest;
 	}
 

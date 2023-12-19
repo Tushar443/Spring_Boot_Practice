@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto createUser(UserDto user) {
-		UserEntity storeUser = userRepo.findByEmail(user.getEmail());
+		UserEntity storeUser = userRepo.findUserByEmail(user.getEmail());
 		if(storeUser != null) {
 			throw new RuntimeException("Duplicate Recorde");
 		}
