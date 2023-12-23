@@ -3,12 +3,8 @@ package com.example.demo.Security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +13,9 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.demo.ws.Service.UserService;
+import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
 @Configuration
 @EnableWebSecurity
@@ -51,16 +50,14 @@ public class WebSecurityDemo{
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
-
 		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
 		authenticationManagerBuilder.userDetailsService(userDetailsService2).passwordEncoder(bCryptPasswordEncoder);
 
-
-         http.csrf(csrf->csrf.disable()).authorizeHttpRequests(configure ->
-				configure
-						.requestMatchers(HttpMethod.POST,"/users/**").permitAll()
-						.anyRequest().authenticated());
-
-		return	http.build();
+	  return http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
+				configure ->
+						configure
+								.requestMatchers(HttpMethod.POST,"/users/**")
+								.permitAll().anyRequest().authenticated()
+		).build();
 	}
 }
