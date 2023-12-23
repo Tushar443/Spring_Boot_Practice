@@ -14,6 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.demo.ws.Service.UserService;
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
 @Configuration
 @EnableWebSecurity
@@ -48,6 +50,9 @@ public class WebSecurityDemo{
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
+		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+		authenticationManagerBuilder.userDetailsService(userDetailsService2).passwordEncoder(bCryptPasswordEncoder);
+
 	  return http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
 				configure ->
 						configure

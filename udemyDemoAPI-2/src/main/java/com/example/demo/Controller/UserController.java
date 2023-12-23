@@ -22,15 +22,10 @@ public class UserController {
 	@Autowired
 	UserService userSerivce;
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String getUser() {
 		System.out.println("Call Hello service");
 		return "Hello World!!!";
-	}
-
-	@GetMapping("/showMyLogInPage")
-	public String getUser2() {
-		return "get user 2 called";
 	}
 
 	@PostMapping
