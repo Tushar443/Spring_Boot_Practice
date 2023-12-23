@@ -2,10 +2,9 @@ package com.example.demo.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,14 +49,16 @@ public class WebSecurityDemo{
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(configure ->
                         configure
-								.requestMatchers("/").hasRole("EMPLOYEE")
-								.requestMatchers("/showMyLogInPage").hasRole("MANAGER")
-                                .anyRequest().authenticated()
+//								.requestMatchers(HttpMethod.GET,"/").hasRole("")
+//								.requestMatchers(HttpMethod.POST,"/users/**").hasRole("")
+								.requestMatchers(HttpMethod.GET,"/users/**")
+								.permitAll()
+								.anyRequest().authenticated()
                 );
 
-		http.formLogin(form-> form
-				.loginPage("/")
-				.permitAll());
+//		http.formLogin(form-> form
+//				.loginPage("/")
+//				.permitAll());
         return http.build();
 		/**
 		 * http.authorizeHttpRequests(configure ->
