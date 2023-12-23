@@ -2,6 +2,9 @@ package com.example.demo.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
@@ -48,32 +51,16 @@ public class WebSecurityDemo{
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests(configure ->
-                        configure
-								.requestMatchers("/").hasRole("EMPLOYEE")
-								.requestMatchers("/showMyLogInPage").hasRole("MANAGER")
-                                .anyRequest().authenticated()
-                );
 
-		http.formLogin(form-> form
-				.loginPage("/")
-				.permitAll());
-        return http.build();
-		/**
-		 * http.authorizeHttpRequests(configure ->
-		 * 		configure
-		 * 		.requestMatchers("/").hasRole("EMPLOYEE")
-		 * 		.requestMatchers("/leaders/**").hasRole("MANAGER")
-		 * 		.requestMatchers("/system/**").hasRole("ADMIN")
-		 * 		.anyRequest().authenticated()
-		 * 		)
-		 * 		.formLogin(form-> form
-		 * 				.loginPage("/showMyLogInPage")
-		 * 				.loginProcessingUrl("/authenticateTheUser")
-		 * 				.permitAll()
-		 * 				).logout(logout -> logout.permitAll())
-		 * 		.exceptionHandling(configure -> configure.accessDeniedPage("/access-denied"));
-		 * 		return http.build();
-		 */
+		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+		authenticationManagerBuilder.userDetailsService(userDetailsService2).passwordEncoder(bCryptPasswordEncoder);
+
+
+         http.csrf(csrf->csrf.disable()).authorizeHttpRequests(configure ->
+				configure
+						.requestMatchers(HttpMethod.POST,"/users/**").permitAll()
+						.anyRequest().authenticated());
+
+		return	http.build();
 	}
 }

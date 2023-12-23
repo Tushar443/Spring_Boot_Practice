@@ -16,19 +16,15 @@ import com.example.demo.ws.ui.model.request.UserDetailsReqModel;
 import com.example.demo.ws.ui.model.response.UserRest;
 
 @RestController
+@RequestMapping("/users/")
 public class UserController {
 
 	@Autowired
 	UserService userSerivce;
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String getUser() {
 		return "Hello World!!!";
-	}
-
-	@GetMapping("/showMyLogInPage")
-	public String getUser2() {
-		return "get user 2 called";
 	}
 
 	@PostMapping
