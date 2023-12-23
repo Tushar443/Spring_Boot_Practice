@@ -48,13 +48,32 @@ public class WebSecurityDemo{
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests(configurer ->
-                        configurer
-                                .requestMatchers("/users/**").hasRole("EMPLOYEE")
+        http.authorizeHttpRequests(configure ->
+                        configure
+								.requestMatchers("/").hasRole("EMPLOYEE")
+								.requestMatchers("/showMyLogInPage").hasRole("MANAGER")
                                 .anyRequest().authenticated()
                 );
 
-		http.formLogin(form-> form.permitAll());
+		http.formLogin(form-> form
+				.loginPage("/")
+				.permitAll());
         return http.build();
+		/**
+		 * http.authorizeHttpRequests(configure ->
+		 * 		configure
+		 * 		.requestMatchers("/").hasRole("EMPLOYEE")
+		 * 		.requestMatchers("/leaders/**").hasRole("MANAGER")
+		 * 		.requestMatchers("/system/**").hasRole("ADMIN")
+		 * 		.anyRequest().authenticated()
+		 * 		)
+		 * 		.formLogin(form-> form
+		 * 				.loginPage("/showMyLogInPage")
+		 * 				.loginProcessingUrl("/authenticateTheUser")
+		 * 				.permitAll()
+		 * 				).logout(logout -> logout.permitAll())
+		 * 		.exceptionHandling(configure -> configure.accessDeniedPage("/access-denied"));
+		 * 		return http.build();
+		 */
 	}
 }
