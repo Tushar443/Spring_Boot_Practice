@@ -13,6 +13,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.demo.ws.Service.UserService;
+import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -47,34 +48,11 @@ public class WebSecurityDemo{
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests(configure ->
-                        configure
-//								.requestMatchers(HttpMethod.GET,"/").hasRole("")
-//								.requestMatchers(HttpMethod.POST,"/users/**").hasRole("")
-								.requestMatchers(HttpMethod.GET,"/users/**")
-								.permitAll()
-								.anyRequest().authenticated()
-                );
-
-//		http.formLogin(form-> form
-//				.loginPage("/")
-//				.permitAll());
-        return http.build();
-		/**
-		 * http.authorizeHttpRequests(configure ->
-		 * 		configure
-		 * 		.requestMatchers("/").hasRole("EMPLOYEE")
-		 * 		.requestMatchers("/leaders/**").hasRole("MANAGER")
-		 * 		.requestMatchers("/system/**").hasRole("ADMIN")
-		 * 		.anyRequest().authenticated()
-		 * 		)
-		 * 		.formLogin(form-> form
-		 * 				.loginPage("/showMyLogInPage")
-		 * 				.loginProcessingUrl("/authenticateTheUser")
-		 * 				.permitAll()
-		 * 				).logout(logout -> logout.permitAll())
-		 * 		.exceptionHandling(configure -> configure.accessDeniedPage("/access-denied"));
-		 * 		return http.build();
-		 */
+	  return http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
+				configure ->
+						configure
+								.requestMatchers(HttpMethod.POST,"/users/**")
+								.permitAll().anyRequest().authenticated()
+		).build();
 	}
 }

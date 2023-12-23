@@ -16,7 +16,7 @@ import com.example.demo.ws.ui.model.request.UserDetailsReqModel;
 import com.example.demo.ws.ui.model.response.UserRest;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/users/")
 public class UserController {
 
 	@Autowired
@@ -24,6 +24,7 @@ public class UserController {
 
 	@RequestMapping("/")
 	public String getUser() {
+		System.out.println("Call Hello service");
 		return "Hello World!!!";
 	}
 
@@ -36,6 +37,7 @@ public class UserController {
 	public UserRest addUser(@RequestBody UserDetailsReqModel userDetails) {
 		UserRest userRest = new UserRest();
 		UserDto userDto = new UserDto();
+		System.out.println("Call create User");
 		BeanUtils.copyProperties(userDetails, userDto);
 		UserDto createUser = userSerivce.createUser(userDto);
 		BeanUtils.copyProperties(createUser, userRest);
