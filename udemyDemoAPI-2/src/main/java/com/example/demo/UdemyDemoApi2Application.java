@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.ws.SpringApplicationContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,10 @@ public class UdemyDemoApi2Application {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
+
+	//Instead using @Component in the Context class we used @Bean class
+	@Bean
+	public SpringApplicationContext springApplicationContext(){
+		return new SpringApplicationContext();
+	}
 }
