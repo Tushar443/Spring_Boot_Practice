@@ -3,7 +3,8 @@ create database employee_directory;
 use employee_directory;
 
 select * from employee;
-
+select * from roles;
+select * from members;
 -- insert into employee_directory.employee values
 -- (1,'Tushar','more','tushar@gmail.com'),
 -- (2,'prakash','morre','prakash@gmail.com'),

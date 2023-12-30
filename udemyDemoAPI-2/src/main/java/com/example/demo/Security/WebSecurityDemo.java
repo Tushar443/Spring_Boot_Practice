@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,14 +51,29 @@ public class WebSecurityDemo{
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
+		System.out.println("----------configure() Method Call----------");
+		// Configure AuthenticationManagerBuilder
 		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
 		authenticationManagerBuilder.userDetailsService(userDetailsService2).passwordEncoder(bCryptPasswordEncoder);
 
-	  return http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
-				configure ->
+		AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+
+		//Customize Login URL path
+		AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager);
+		authenticationFilter.setFilterProcessesUrl("/users/login");
+
+
+
+	  return http.csrf(csrf -> csrf.disable())
+			  .authorizeHttpRequests(
+					configure ->
 						configure
-								.requestMatchers(HttpMethod.POST,"/users/**")
+								.requestMatchers(HttpMethod.POST,SecurityConstants.SIGN_UP_URL)
 								.permitAll().anyRequest().authenticated()
-		).build();
+				)
+			  .authenticationManager(authenticationManager)
+			  .addFilter(authenticationFilter)
+			  .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			  .build();
 	}
 }
