@@ -1,0 +1,6 @@
+#spring:
+#  mvc:
+#    content-negotiation:
+#      favor-path-extension: true
+#      favor-parameter: true
+#      defaultContentType: application/xml
