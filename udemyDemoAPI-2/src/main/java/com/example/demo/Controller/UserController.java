@@ -2,13 +2,7 @@ package com.example.demo.Controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.ws.Service.UserService;
 import com.example.demo.ws.shared.dto.UserDto;
@@ -16,7 +10,8 @@ import com.example.demo.ws.ui.model.request.UserDetailsReqModel;
 import com.example.demo.ws.ui.model.response.UserRest;
 
 @RestController
-@RequestMapping("/users/")
+@CrossOrigin
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
