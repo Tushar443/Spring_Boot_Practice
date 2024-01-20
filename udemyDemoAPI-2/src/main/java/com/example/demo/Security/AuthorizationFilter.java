@@ -1,5 +1,6 @@
 package com.example.demo.Security;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("----------doFilterInternal() Method Call----------");
+        System.out.println("----------AuthorizationFilter == doFilterInternal() Method Call----------");
         String header = request.getHeader(SecurityConstants.HEADER_STRING);
 
         if(header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)){
@@ -35,20 +36,20 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        System.out.println("----------getAuthentication() Method Call----------");
+        System.out.println("----------AuthorizationFilter == getAuthentication() Method Call----------");
         String authorizationHeader = request.getHeader(SecurityConstants.HEADER_STRING);
         if(authorizationHeader == null){
             return null;
         }
         String token = authorizationHeader.replace(SecurityConstants.TOKEN_PREFIX,"");
 
-        byte[] secreteKeyBytes = Base64.getEncoder().encode(SecurityConstants.TOKEN_SECRET.getBytes());
-        SecretKey secretKey = new SecretKeySpec(secreteKeyBytes, SignatureAlgorithm.HS512.getJcaName());
+        byte[] secreteKeyBytes = SecurityConstants.TOKEN_SECRET.getBytes();
+        SecretKey secretKey = Keys.hmacShaKeyFor(secreteKeyBytes);// new SecretKeySpec(secreteKeyBytes, SignatureAlgorithm.HS512.getJcaName());
 
-        JwtParser jwtParser = Jwts.parser().setSigningKey(secretKey).build();
+        JwtParser jwtParser = Jwts.parser().verifyWith(secretKey).build();
 
-        Jwt<Header , Claims> jwt = (Jwt<Header, Claims>) jwtParser.parse(token);
-        String subject = jwt.getBody().getSubject();
+        Claims claims = jwtParser.parseSignedClaims(token).getPayload();
+        String subject = (String) claims.get("sub");
 
         if(subject == null) {
             return null;

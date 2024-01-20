@@ -1,15 +1,13 @@
 package com.example.demo.Security;
 
 import com.example.demo.ws.Service.UserService;
-import com.example.demo.ws.Service.impl.UserServiceImpl;
 import com.example.demo.ws.SpringApplicationContext;
 import com.example.demo.ws.shared.dto.UserDto;
 import com.example.demo.ws.ui.model.request.UserLoginRequestModel;
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,7 +35,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("----------attemptAuthentication() Method Call----------");
+        System.out.println("----------AuthenticationFilter == attemptAuthentication() Method Call----------");
         try{
                 UserLoginRequestModel creds = new ObjectMapper().readValue(request.getInputStream(),UserLoginRequestModel.class);
                 return getAuthenticationManager().authenticate(
@@ -50,9 +48,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        System.out.println("----------successfulAuthentication() Method Call----------");
-        byte [] secreteKeyBytes = Base64.getEncoder().encode(SecurityConstants.TOKEN_SECRET.getBytes());
-        SecretKey secretKey = new SecretKeySpec(secreteKeyBytes, SignatureAlgorithm.HS512.getJcaName());
+        System.out.println("----------AuthenticationFilter == successfulAuthentication() Method Call----------");
+        byte [] secreteKeyBytes = SecurityConstants.TOKEN_SECRET.getBytes();
+        SecretKey secretKey = Keys.hmacShaKeyFor(secreteKeyBytes);
         Instant now = Instant.now();
 
         String userName = ((User)authResult.getPrincipal()).getUsername();
@@ -60,7 +58,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .setSubject(userName)
                 .setExpiration(Date.from(now.plusMillis(SecurityConstants.EXPIRATION_TIME)))
                 .setIssuedAt(Date.from(now))
-                .signWith(secretKey,SignatureAlgorithm.HS512).compact();
+                .signWith(secretKey)
+                .compact();
 
         UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
         UserDto userDto = userService.getUser(userName);
