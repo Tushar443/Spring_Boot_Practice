@@ -9,45 +9,23 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityDemo{
+public class WebSecurity {
 
 	private final UserService userDetailsService2;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public WebSecurityDemo(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public WebSecurity(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userDetailsService2 = userDetailsService;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
-//	@Bean
-//	public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-//        UserDetails john = org.springframework.security.core.userdetails.User.builder().username("John")
-//                .password("{noop}test123").roles("EMPLOYEE").build();
-//
-//        UserDetails mary = org.springframework.security.core.userdetails.User.builder().username("Mary")
-//                .password("{noop}test123").roles("EMPLOYEE", "MANAGER").build();
-//
-//        UserDetails susan = org.springframework.security.core.userdetails.User.builder().username("Susan")
-//                .password("{noop}test123").roles("EMPLOYEE", "MANAGER", "ADMIN").build();
-//
-//        return new InMemoryUserDetailsManager(john, mary, susan);
-//}
-
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
-
 	@Bean
-	protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
+	SecurityFilterChain configure(HttpSecurity http) throws Exception{
 		System.out.println("----------WebSecurityDemo == configure() Method Call----------");
 		// Configure AuthenticationManagerBuilder
 		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -64,7 +42,7 @@ public class WebSecurityDemo{
 			  .authorizeHttpRequests(
 					configure ->
 						configure
-								.requestMatchers(HttpMethod.POST,"/users/**")
+								.requestMatchers(HttpMethod.POST,SecurityConstants.SIGN_UP_URL)
 								.permitAll().anyRequest().authenticated()
 				)
 			  .authenticationManager(authenticationManager)
