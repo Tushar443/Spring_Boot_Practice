@@ -17,7 +17,8 @@ public class UserController {
 	@Autowired
 	UserService userSerivce;
 
-	@GetMapping("/")
+//	@GetMapping("/")
+	@GetMapping
 	public String getUser() {
 		System.out.println("Call Hello service");
 		return "Hello World!!!";

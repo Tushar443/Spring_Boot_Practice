@@ -51,7 +51,17 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
         Claims claims = jwtParser.parseSignedClaims(token).getPayload();
         String subject = (String) claims.get("sub");
-
+        /** Another way to verify token
+         *  String token = request.getHeader(HEADER_STRING);
+         *
+         *         if (token != null) {
+         *             // parse the token.
+         *             String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+         *                     .build()
+         *                     .verify(token.replace(TOKEN_PREFIX, ""))
+         *                     .getSubject();
+         *        }
+         */
         if(subject == null) {
             return null;
         }
