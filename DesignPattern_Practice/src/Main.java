@@ -10,6 +10,10 @@ import CreationDesignPattern.SingltonDP.ImagePrinter;
 import CreationDesignPattern.SingltonDP.Practice.Cat;
 import CreationDesignPattern.SingltonDP.Practice.Dog;
 import StructuralDesignPatterns.AdaptorDesignPattern.*;
+import StructuralDesignPatterns.BridgeDesignPattern.AdultSize;
+import StructuralDesignPatterns.BridgeDesignPattern.ChildSize;
+import StructuralDesignPatterns.BridgeDesignPattern.Hoodie;
+import StructuralDesignPatterns.BridgeDesignPattern.Shirt;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -38,7 +42,12 @@ public class Main {
     }
 
     private static void bridgeDP() {
-
+        Hoodie hoodie = new Hoodie(new AdultSize());
+        System.out.println(hoodie.getType());
+        hoodie.getSize().getSize();
+        Shirt shirt = new Shirt(new ChildSize());
+        System.out.println(shirt.getType());
+        shirt.getSize().getSize();
     }
 
     private static void adaptorDP() {
