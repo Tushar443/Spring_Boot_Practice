@@ -9,13 +9,53 @@ import CreationDesignPattern.SingltonDP.DocumentPrinter;
 import CreationDesignPattern.SingltonDP.ImagePrinter;
 import CreationDesignPattern.SingltonDP.Practice.Cat;
 import CreationDesignPattern.SingltonDP.Practice.Dog;
-import CreationDesignPattern.SingltonDP.PrintSpooler;
+import StructuralDesignPatterns.AdaptorDesignPattern.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        /**
+         * Creational Design Pattern
+         */
+        creationalDesignPattern();
+
+        /**
+         * Structural Design Pattern
+         */
+        structuralDesignPattern();
+
+    }
+
+    private static void structuralDesignPattern() {
+        /**
+         * Adaptor DP
+         */
+//        adaptorDP();
+
+        bridgeDP();
+    }
+
+    private static void bridgeDP() {
+
+    }
+
+    private static void adaptorDP() {
+        var pdfDocumentUploader = new PdfDocumentUploader();
+        var onlineApplication = new OnlineApplication(pdfDocumentUploader);
+        onlineApplication.uploadDocument();
+
+        DocumentUploader wordDocumentUploader1 = new WordDocumentAdaptorObjectPattern();
+        OnlineApplication onlineApplication1 = new OnlineApplication(wordDocumentUploader1);
+        onlineApplication1.uploadDocument();
+
+        DocumentUploader wordDocumentUploader2 = new WordDocumentAdaptorClassPattern();
+        OnlineApplication onlineApplication2 = new OnlineApplication(wordDocumentUploader2);
+        onlineApplication2.uploadDocument();
+    }
+
+    public static void creationalDesignPattern(){
         /**
          * Builder Design Pattern
          */
@@ -35,7 +75,7 @@ public class Main {
         /**
          * Abstract Factories Design Pattern
          */
-        abstractDP();
+//        abstractDP();
     }
 
     private static void abstractDP() {
