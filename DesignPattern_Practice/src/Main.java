@@ -16,13 +16,16 @@ import StructuralDesignPatterns.BridgeDesignPattern.Hoodie;
 import StructuralDesignPatterns.BridgeDesignPattern.Shirt;
 import StructuralDesignPatterns.CompositeDesignPattern.CheckList;
 import StructuralDesignPatterns.CompositeDesignPattern.TodoItem;
-import StructuralDesignPatterns.FlyWeightDP.Order;
 import StructuralDesignPatterns.FlyWeightDP.OrderFactory;
+import StructuralDesignPatterns.ProxyDP.RecommandationProxy;
+import StructuralDesignPatterns.ProxyDP.SongRecommendations;
+import StructuralDesignPatterns.ProxyDP.User;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
         /**
          * Creational Design Pattern
@@ -53,9 +56,30 @@ public class Main {
         /**
          * FlyWeight DP
          */
-        FlyWeightDP();
+//        FlyWeightDP();
+        /**
+         * Proxy DP
+         */
+        proxyDP();
     }
 
+    private static final RecommandationProxy recommandationProxy = new RecommandationProxy();
+
+    private static void proxyDP() {
+        User user = new User("Jill",false);
+        loadHomePage(user);
+        loadDiscoverPage(user);
+    }
+
+    private static void loadHomePage(User user) {
+        System.out.println("Loading home page...");
+        recommandationProxy.showRecommendations(user);
+    }
+
+    private static void loadDiscoverPage(User user) {
+        System.out.println("Loading discover page...");
+        recommandationProxy.showRecommendations(user);
+    }
     private static void FlyWeightDP() {
         var pizza1 = OrderFactory.createOrder("pizza");
         var pizza2 = OrderFactory.createOrder("pizza");
