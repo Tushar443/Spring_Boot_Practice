@@ -14,6 +14,8 @@ import StructuralDesignPatterns.BridgeDesignPattern.AdultSize;
 import StructuralDesignPatterns.BridgeDesignPattern.ChildSize;
 import StructuralDesignPatterns.BridgeDesignPattern.Hoodie;
 import StructuralDesignPatterns.BridgeDesignPattern.Shirt;
+import StructuralDesignPatterns.CompositeDesignPattern.CheckList;
+import StructuralDesignPatterns.CompositeDesignPattern.TodoItem;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,7 +25,7 @@ public class Main {
         /**
          * Creational Design Pattern
          */
-        creationalDesignPattern();
+        //creationalDesignPattern();
 
         /**
          * Structural Design Pattern
@@ -34,11 +36,32 @@ public class Main {
 
     private static void structuralDesignPattern() {
         /**
-         * Adaptor DP
+         * Adaptor Design Pattern
          */
 //        adaptorDP();
+        /**
+         * Bridge Design Pattern
+         */
+//        bridgeDP();
+        /**
+         * Composite Design Pattern
+         */
+        compositeDP();
+    }
 
-        bridgeDP();
+    private static void compositeDP() {
+        CheckList checklist = new CheckList();
+        var todoItem1 = new TodoItem("Do this");
+        var todoItem2 = new TodoItem("Do that");
+        var todoItem3 = new TodoItem("Do something else");
+
+        checklist.addTodoItem(todoItem1);
+        checklist.addTodoItem(todoItem2);
+        checklist.addTodoItem(todoItem3);
+
+        todoItem1.complete();
+
+        checklist.isComplete();
     }
 
     private static void bridgeDP() {
