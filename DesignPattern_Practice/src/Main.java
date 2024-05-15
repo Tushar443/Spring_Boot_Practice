@@ -16,6 +16,8 @@ import StructuralDesignPatterns.BridgeDesignPattern.Hoodie;
 import StructuralDesignPatterns.BridgeDesignPattern.Shirt;
 import StructuralDesignPatterns.CompositeDesignPattern.CheckList;
 import StructuralDesignPatterns.CompositeDesignPattern.TodoItem;
+import StructuralDesignPatterns.FlyWeightDP.Order;
+import StructuralDesignPatterns.FlyWeightDP.OrderFactory;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -46,7 +48,30 @@ public class Main {
         /**
          * Composite Design Pattern
          */
-        compositeDP();
+//        compositeDP();
+
+        /**
+         * FlyWeight DP
+         */
+        FlyWeightDP();
+    }
+
+    private static void FlyWeightDP() {
+        var pizza1 = OrderFactory.createOrder("pizza");
+        var pizza2 = OrderFactory.createOrder("pizza");
+        var pizza3 = OrderFactory.createOrder("pizza");
+
+        System.out.println(pizza1);
+        System.out.println(pizza2);
+        System.out.println(pizza3);
+
+        var burger1 = OrderFactory.createOrder("burger");
+        var burger2 = OrderFactory.createOrder("burger");
+        var burger3 = OrderFactory.createOrder("burger");
+        System.out.println(burger1);
+        System.out.println(burger2);
+        System.out.println(burger3);
+
     }
 
     private static void compositeDP() {
