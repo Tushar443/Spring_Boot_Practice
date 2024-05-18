@@ -1,3 +1,7 @@
+import BehavioralDesignPattern.CommandDP.AddToBasketOperation;
+import BehavioralDesignPattern.CommandDP.Item;
+import BehavioralDesignPattern.CommandDP.ItemOperationExecutor;
+import BehavioralDesignPattern.CommandDP.removeFromBasketOperation;
 import CreationDesignPattern.AbstractFactoriesDP.*;
 import CreationDesignPattern.BuilderDP.Person;
 import CreationDesignPattern.FactoryDP.Ticket;
@@ -18,7 +22,6 @@ import StructuralDesignPatterns.CompositeDesignPattern.CheckList;
 import StructuralDesignPatterns.CompositeDesignPattern.TodoItem;
 import StructuralDesignPatterns.FlyWeightDP.OrderFactory;
 import StructuralDesignPatterns.ProxyDP.RecommandationProxy;
-import StructuralDesignPatterns.ProxyDP.SongRecommendations;
 import StructuralDesignPatterns.ProxyDP.User;
 
 import java.time.LocalDate;
@@ -35,8 +38,33 @@ public class Main {
         /**
          * Structural Design Pattern
          */
-        structuralDesignPattern();
+//        structuralDesignPattern();
+        /**
+         * Behavioral Design Pattern
+         */
+        behavioralDesignPattern();
 
+    }
+
+    private static void behavioralDesignPattern() {
+        /**
+         * Command Design Pattern
+         */
+        commandDP();
+    }
+
+    private static void commandDP() {
+        var item1 = new Item(1);
+        var item2 = new Item(2);
+        var item3 = new Item(3);
+
+        ItemOperationExecutor itemOperationExecutor = new ItemOperationExecutor();
+        itemOperationExecutor.queueOperation(new AddToBasketOperation(item1));
+        itemOperationExecutor.queueOperation(new AddToBasketOperation(item2));
+        itemOperationExecutor.queueOperation(new AddToBasketOperation(item3));
+        itemOperationExecutor.queueOperation(new removeFromBasketOperation(item2));
+
+        itemOperationExecutor.checkout();
     }
 
     private static void structuralDesignPattern() {
@@ -191,6 +219,7 @@ public class Main {
 //            throw new IllegalArgumentException("Bike type not supported");
 //        }
     }
+
     private static void FactoryMethodDP() {
         TicketMachine tm = new TicketMachine();
         Ticket bus = tm.createTicket("bus");
