@@ -2,6 +2,7 @@ import BehavioralDesignPattern.CommandDP.CommandMain;
 import BehavioralDesignPattern.IteratorDP.MainClass;
 import BehavioralDesignPattern.MementoDP.DocumentViewer;
 import BehavioralDesignPattern.ObserverDP.ObserverMain;
+import BehavioralDesignPattern.StateDP.StateDpMain;
 import CreationDesignPattern.AbstractFactoriesDP.AbstractMain;
 import CreationDesignPattern.BuilderDP.BuilderMain;
 import CreationDesignPattern.FactoryDP.FactoryMain;
@@ -66,6 +67,13 @@ public class Main {
         System.out.println();
         System.out.println("Observer Design Pattern");
         ObserverMain.main();
+
+        /**
+         * State Design Pattern
+         */
+        System.out.println();
+        System.out.println("State Design Pattern");
+        StateDpMain.main();
     }
 
     private static void structuralDesignPattern() {
