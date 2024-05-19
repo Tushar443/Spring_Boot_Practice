@@ -2,6 +2,9 @@ import BehavioralDesignPattern.CommandDP.AddToBasketOperation;
 import BehavioralDesignPattern.CommandDP.Item;
 import BehavioralDesignPattern.CommandDP.ItemOperationExecutor;
 import BehavioralDesignPattern.CommandDP.removeFromBasketOperation;
+import BehavioralDesignPattern.IteratorDP.Inventory;
+import BehavioralDesignPattern.IteratorDP.ItemIT;
+import BehavioralDesignPattern.IteratorDP.StockIterator;
 import CreationDesignPattern.AbstractFactoriesDP.*;
 import CreationDesignPattern.BuilderDP.Person;
 import CreationDesignPattern.FactoryDP.Ticket;
@@ -50,7 +53,27 @@ public class Main {
         /**
          * Command Design Pattern
          */
-        commandDP();
+//        commandDP();
+
+        /**
+         * Iterator Design Pattern
+         */
+        iteratorDP();
+    }
+
+    private static void iteratorDP() {
+        var pen = new ItemIT("Pen", 20);
+        var pencil = new ItemIT("Pencil", 0);
+        var eraser = new ItemIT("Eraser", 15);
+
+        Inventory inventory = new Inventory(pen,pencil,eraser);
+        StockIterator stockIterator = (StockIterator) inventory.iterator();
+        while (stockIterator.hasNext()){
+            ItemIT itemIT = stockIterator.next();
+            System.out.println(itemIT);
+        }
+
+
     }
 
     private static void commandDP() {
