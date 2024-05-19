@@ -1,6 +1,7 @@
 import BehavioralDesignPattern.CommandDP.CommandMain;
 import BehavioralDesignPattern.IteratorDP.MainClass;
 import BehavioralDesignPattern.MementoDP.DocumentViewer;
+import BehavioralDesignPattern.ObserverDP.ObserverMain;
 import CreationDesignPattern.AbstractFactoriesDP.AbstractMain;
 import CreationDesignPattern.BuilderDP.BuilderMain;
 import CreationDesignPattern.FactoryDP.FactoryMain;
@@ -64,7 +65,7 @@ public class Main {
          */
         System.out.println();
         System.out.println("Observer Design Pattern");
-
+        ObserverMain.main();
     }
 
     private static void structuralDesignPattern() {
