@@ -22,7 +22,7 @@ public class Main {
          */
 //        System.out.println();
 //        System.out.println("Creational Design Pattern");
-//        creationDesignPattern();
+        creationDesignPattern();
 
         /**
          * Structural Design Pattern
@@ -35,7 +35,7 @@ public class Main {
          */
         System.out.println();
         System.out.println("Behavioral Design Pattern");
-        behavioralDesignPattern();
+//        behavioralDesignPattern();
 
     }
 
