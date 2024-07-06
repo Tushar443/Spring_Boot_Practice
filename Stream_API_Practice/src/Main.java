@@ -140,6 +140,12 @@ public class Main {
 
         Object[] intArr =  list1.stream().toArray();
         Arrays.stream(intArr).forEach(System.out::println);
+
+        int[] a = {2,5,4,5,6,5,11};
+        Optional<Map.Entry<Integer, Long>> max = Arrays.stream(a).boxed()
+                .collect(Collectors.groupingBy(z -> z, Collectors.counting())).entrySet().stream().max(Map.Entry.comparingByValue());
+//                 .forEach((k,v)-> System.out.println(k+" "+v.size()));
+        System.out.println(max);
     }
 
 }
