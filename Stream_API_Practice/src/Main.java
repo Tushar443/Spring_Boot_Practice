@@ -1,14 +1,54 @@
 import java.sql.SQLOutput;
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] arg) {
 //        NormalOpOnList();
-        PerformStreamOperationOnStudent();
+        //PerformStreamOperationOnStudent();
+        PerformStreamOperationOnEmployee();
+    }
+
+    private static void PerformStreamOperationOnEmployee() {
+        ArrayList<Employee> list = new ArrayList<>(Arrays.asList(
+                new Employee(1,"ABC", 1000.0),
+                new Employee(1,"DEF", 5000.0),
+                new Employee(1,"GHI", 2500.0),
+                new Employee(1,"JKL", 3000.0),
+                new Employee(1,"MNO", 3000.0),
+                new Employee(1,"PQR", 2500.0),
+                new Employee(1,"XYZ", 500.0),
+                new Employee(1,"TMQ", 2500.0)
+        ));
+
+        //Find 3rd Largest Salary
+        Map.Entry<Double, List<Employee>> doubleListEntry = list.stream()
+                .collect(Collectors.groupingBy(Employee::getSalary))
+                .entrySet().stream().sorted((x,z)-> (int) (z.getKey() - x.getKey()))
+                .skip(2).findFirst().get();
+
+        System.out.println(doubleListEntry.getKey() + " " +doubleListEntry.getValue());
+
+
+//        System.out.println(doubleListEntry);
+
+        List<EmployeeTwo> empList = new ArrayList<>();
+        empList.add(new EmployeeTwo(1, "abc", 28, 123, "F", "HR", "Blore", 2020));
+        empList.add(new EmployeeTwo(2, "xyz", 29, 120, "F", "HR", "Hyderabad", 2015));
+        empList.add(new EmployeeTwo(3, "efg", 30, 115, "M", "HR", "Chennai", 2014));
+        empList.add(new EmployeeTwo(4, "def", 32, 125, "F", "HR", "Chennai", 2013));
+        empList.add(new EmployeeTwo(5, "ijk", 22, 150, "F", "IT", "Noida", 2013));
+        empList.add(new EmployeeTwo(6, "mno", 27, 140, "M", "IT", "Gurugram", 2017));
+        empList.add(new EmployeeTwo(7, "uvw", 26, 130, "F", "IT", "Pune", 2016));
+        empList.add(new EmployeeTwo(8, "pqr", 23, 145, "M", "IT", "Trivandrum", 2015));
+        empList.add(new EmployeeTwo(9, "stv", 25, 160, "M", "IT", "Blore", 2010));
+
     }
 
     private static void NormalOpOnList() {
@@ -138,7 +178,7 @@ public class Main {
                 .entrySet().stream().max(Map.Entry.comparingByKey());
         System.out.println("Max length = "+ s +" " + collect13);
 
-        Object[] intArr =  list1.stream().toArray();
+        Object[] intArr = list1.toArray();
         Arrays.stream(intArr).forEach(System.out::println);
 
         int[] a = {2,5,4,5,6,5,11};
@@ -146,6 +186,38 @@ public class Main {
                 .collect(Collectors.groupingBy(z -> z, Collectors.counting())).entrySet().stream().max(Map.Entry.comparingByValue());
 //                 .forEach((k,v)-> System.out.println(k+" "+v.size()));
         System.out.println(max);
+
+        int[] oddEven = {2,3,4,5,6,7,8,9,10,11};
+        System.out.println("Odd and even list from stream");
+        BiConsumer<Boolean,List<Integer>> biConsumer = (isEven , listBiConsumer)->{
+            if(isEven){
+                System.out.println("Even = ");
+                listBiConsumer.forEach(System.out::println);
+            }else{
+                System.out.println("Odd = ");
+                listBiConsumer.forEach(System.out::println);
+            }
+        };
+//        biConsumer.accept(true,Arrays.asList(1,2,3,4,5,6,7,8)); for calling biConsumer
+        Arrays.stream(oddEven).boxed().collect(Collectors.groupingBy(z -> z % 2 == 0)).forEach(biConsumer);
+//        System.out.println(collect14);
+
+        //find charactor count
+//        String charCount="Thundderrrwwss";
+//        char[] chars = charCount.toCharArray();
+//
+//        System.out.println("Count char in the String");
+//        List<Integer> collect14 = Arrays.stream(Stream.of(chars).toArray()).map(o -> Character.getNumericValue((Character) o)).collect(Collectors.toList());
+//
+//        Map<Integer, Long> collect15 = collect14.stream().collect(Collectors.groupingBy(t -> t, Collectors.counting()));
+//        collect15.forEach((key, value) -> System.out.println(key +" $ "+ value));
+//        //.entrySet().stream().forEach(listEntry -> System.out.println(listEntry.getKey() +" "+listEntry.getValue()));
+//
+//        // find sub string
+//        String[] strs = {"aaa","aa","aaa"};
+//        Arrays.stream(strs).map(String::toCharArray).collect(Collectors.groupingBy(Object::toString));
+
+
     }
 
 }
