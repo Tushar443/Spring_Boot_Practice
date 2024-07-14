@@ -28,15 +28,14 @@ public class Main {
         ));
 
         //Find 3rd Largest Salary
+        System.out.println("### Find 3rd Largest Salary");
         Map.Entry<Double, List<Employee>> doubleListEntry = list.stream()
                 .collect(Collectors.groupingBy(Employee::getSalary))
                 .entrySet().stream().sorted((x,z)-> (int) (z.getKey() - x.getKey()))
                 .skip(2).findFirst().get();
 
         System.out.println(doubleListEntry.getKey() + " " +doubleListEntry.getValue());
-
-
-//        System.out.println(doubleListEntry);
+//      System.out.println(doubleListEntry);
 
         List<EmployeeTwo> empList = new ArrayList<>();
         empList.add(new EmployeeTwo(1, "abc", 28, 123, "F", "HR", "Blore", 2020));
@@ -49,6 +48,108 @@ public class Main {
         empList.add(new EmployeeTwo(8, "pqr", 23, 145, "M", "IT", "Trivandrum", 2015));
         empList.add(new EmployeeTwo(9, "stv", 25, 160, "M", "IT", "Blore", 2010));
 
+
+        System.out.println("### Grouping Employees by City");
+        empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getCity)).entrySet().forEach(System.out::println);
+
+        System.out.println("### Grouping Employees by Age");
+        empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getAge)).entrySet().forEach(System.out::println);
+
+        System.out.println("### Finding the Count of Male and Female Employees");
+        empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getGender,Collectors.counting()))
+                .forEach((s, aLong) -> System.out.println("Gender = "+s +" count = "+aLong));
+
+        System.out.println("### Department name names");
+        empList.stream().map(EmployeeTwo::getDeptName).distinct().forEach(System.out::println);
+
+        System.out.println("### Printing Employee Details by Age Criteria Age>28");
+        empList.stream().filter(employeeTwo -> employeeTwo.getAge()>=28).forEach(System.out::println);
+
+        System.out.println("### Finding Maximum Age of Employee");
+        empList.stream().mapToInt(EmployeeTwo::getAge).max();
+        Optional<Map.Entry<Integer, List<EmployeeTwo>>> max = empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getAge)).entrySet().stream().max(Map.Entry.comparingByKey());
+        System.out.println(max);
+
+        System.out.println("### Printing Average Age of Male and Female Employees");
+        empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getGender,Collectors.averagingInt(EmployeeTwo::getAge))).entrySet().forEach(System.out::println);
+
+        System.out.println("### Printing the Number of Employees in Each Department");
+        empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getDeptName,Collectors.counting())).entrySet().forEach(System.out::println);
+
+        System.out.println("### Finding the Oldest Employee");
+        Optional<Map.Entry<Integer, List<EmployeeTwo>>> min = empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getYearOfJoining))
+                .entrySet().stream().min(Map.Entry.comparingByKey());
+        System.out.println(min);
+
+        System.out.println("### Finding the Youngest Female Employee");
+        Optional<Map.Entry<Integer, List<EmployeeTwo>>> max1 = empList.stream()
+                .filter(employeeTwo -> employeeTwo.getGender().equalsIgnoreCase("F"))
+                .collect(Collectors.groupingBy(EmployeeTwo::getYearOfJoining))
+//                employeeTwo -> employeeTwo.getGender().equalsIgnoreCase("F")))
+                .entrySet().stream().max(Map.Entry.comparingByKey());
+        System.out.println(max1);
+
+        System.out.println("### Finding Employees by Age Range 30 > Age > 30 ");
+        empList.stream().collect(Collectors.partitioningBy(o -> o.getAge() > 30)).entrySet().forEach(System.out::println);
+
+        System.out.println("### Finding Department with Highest Number of Employees");
+        Map.Entry<String, Long> stringLongEntry = empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getDeptName, Collectors.counting()))
+                .entrySet().stream().max(Map.Entry.comparingByValue()).get();
+        System.out.println(stringLongEntry);
+
+        System.out.println("### Finding Employees from HR Department");
+        empList.stream().filter(e->e.getDeptName().equalsIgnoreCase("HR")).forEach(System.out::println);
+        System.out.println("### Finding Departments with Over 3 Employees");
+        empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getDeptName,Collectors.counting()))
+                .entrySet().stream().filter(entry -> entry.getValue()>4).forEach(System.out::println);
+
+        System.out.println("### Finding and Sorting Employees by City");
+        empList.stream().sorted(Comparator.comparing(EmployeeTwo::getCity).reversed()
+        ).forEach(System.out::println);
+
+        System.out.println("### Sorting Employees by Name and Age");
+        empList.stream().sorted(Comparator.comparing(EmployeeTwo::getName).thenComparing(EmployeeTwo::getAge).reversed())
+                .forEach(System.out::println);
+
+        System.out.println("### Finding the Highest Experienced Employee");
+        Map.Entry<Integer, List<EmployeeTwo>> integerListEntry = empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getYearOfJoining))
+                .entrySet().stream().min(Map.Entry.comparingByKey()).get();
+
+        System.out.println(integerListEntry);
+
+        System.out.println("### Printing Average and Total Salary of the Organization");
+        DoubleSummaryStatistics collect = empList.stream()
+                .collect(Collectors.summarizingDouble(EmployeeTwo::getSalary));
+        System.out.println("sum = "+ collect.getSum() +" average= "+ collect.getAverage());
+
+        System.out.println("### Printing Average Salary of Each Department");
+        empList.stream()
+                .collect(Collectors.groupingBy(EmployeeTwo::getDeptName,Collectors.averagingDouble(EmployeeTwo::getSalary)))
+                .entrySet().forEach(System.out::println);
+
+
+        System.out.println("### Finding the Highest Paid Salary in the Organization Based on Gender");
+        empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getGender,Collectors.maxBy(Comparator.comparing(EmployeeTwo::getSalary))))
+                .forEach((s, employeeTwo) -> System.out.println(s+" "+employeeTwo));
+
+        System.out.println("### Printing the List of Employee's Second Highest salary Record Based on Department:");
+        Map<String, Optional<EmployeeTwo>> collect1 = empList.stream()
+                .collect(Collectors.groupingBy(EmployeeTwo::getDeptName, Collectors.collectingAndThen(Collectors.toList(), employeeTwos ->
+                        employeeTwos.stream().sorted(Comparator.comparing(EmployeeTwo::getSalary).reversed()).skip(1).findFirst()
+                )));
+
+        System.out.println(collect1);
+
+        System.out.println("### Sorting the Employees' Salary in Each Department in Ascending Order");
+        Map<String, Stream<EmployeeTwo>> collect2 = empList.stream()
+                .collect(Collectors.groupingBy(EmployeeTwo::getDeptName
+                        , Collectors.collectingAndThen(Collectors.toList(),
+                                employeeTwos -> employeeTwos.stream().sorted(Comparator.comparingDouble(EmployeeTwo::getSalary)))));
+
+        collect2.forEach((s, employeeTwoStream) -> {
+            System.out.println("Department = "+s);
+            System.out.println(employeeTwoStream.collect(Collectors.toList()));
+        });
     }
 
     private static void NormalOpOnList() {
