@@ -22,10 +22,13 @@ public class Main {
         String claus = String.valueOf(Stream.of(urls).skip(2).findFirst());
         System.out.println(claus);
         StringBuilder sb = new StringBuilder();
-        String string = Stream.of(urls).limit(4).map(s -> {
-            String s1 = (s == urls[3]) ? "00" + urls[3] : s + "/";
-            return s1;
-        }).collect(Collectors.joining());
+//        String string = Stream.of(urls).limit(4).map(s -> {
+//            String s1 = (s == urls[3]) ? "00" + urls[3] : s + "/";
+//            return s1;
+//        }).collect(Collectors.joining());
+
+        String string = IntStream.range(0,urls.length)
+                .mapToObj(i -> i == 3 ? "00"+urls[i] : urls[i]+"/").collect(Collectors.joining());
 
         System.out.println(string);
     }
