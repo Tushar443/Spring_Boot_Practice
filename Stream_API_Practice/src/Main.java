@@ -12,7 +12,22 @@ public class Main {
     public static void main(String[] arg) {
 //        NormalOpOnList();
         //PerformStreamOperationOnStudent();
-        PerformStreamOperationOnEmployee();
+//        PerformStreamOperationOnEmployee();
+        PerformStreamOnString();
+    }
+
+    private static void PerformStreamOnString() {
+        String url = "PF09/009/002/1";
+        String[] urls = url.split("/");
+        String claus = String.valueOf(Stream.of(urls).skip(2).findFirst());
+        System.out.println(claus);
+        StringBuilder sb = new StringBuilder();
+        String string = Stream.of(urls).limit(4).map(s -> {
+            String s1 = (s == urls[3]) ? "00" + urls[3] : s + "/";
+            return s1;
+        }).collect(Collectors.joining());
+
+        System.out.println(string);
     }
 
     private static void PerformStreamOperationOnEmployee() {
