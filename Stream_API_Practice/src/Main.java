@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] arg) {
 //        NormalOpOnList();
         //PerformStreamOperationOnStudent();
-//        PerformStreamOperationOnEmployee();
-        PerformStreamOnString();
+        PerformStreamOperationOnEmployee();
+//        PerformStreamOnString();
     }
 
     private static void PerformStreamOnString() {
@@ -36,13 +36,13 @@ public class Main {
     private static void PerformStreamOperationOnEmployee() {
         ArrayList<Employee> list = new ArrayList<>(Arrays.asList(
                 new Employee(1,"ABC", 1000.0),
-                new Employee(1,"DEF", 5000.0),
-                new Employee(1,"GHI", 2500.0),
-                new Employee(1,"JKL", 3000.0),
-                new Employee(1,"MNO", 3000.0),
-                new Employee(1,"PQR", 2500.0),
-                new Employee(1,"XYZ", 500.0),
-                new Employee(1,"TMQ", 2500.0)
+                new Employee(2,"DEF", 5000.0),
+                new Employee(3,"GHI", 2500.0),
+                new Employee(4,"JKL", 3000.0),
+                new Employee(5,"MNO", 3000.0),
+                new Employee(6,"PQR", 2500.0),
+                new Employee(7,"XYZ", 500.0),
+                new Employee(8,"TMQ", 2500.0)
         ));
 
         //Find 3rd Largest Salary
@@ -51,8 +51,12 @@ public class Main {
                 .collect(Collectors.groupingBy(Employee::getSalary))
                 .entrySet().stream().sorted((x,z)-> (int) (z.getKey() - x.getKey()))
                 .skip(2).findFirst().get();
-
-        System.out.println(doubleListEntry.getKey() + " " +doubleListEntry.getValue());
+        Map.Entry<Double, List<Employee>> doubleListEntry2 = list.stream()
+                .collect(Collectors.groupingBy(Employee::getSalary))
+                .entrySet().stream().sorted(Map.Entry.comparingByKey((o1, o2) -> (int) (o2-o1)))
+                .skip(2).findFirst().get();
+        System.out.println("1 = "+doubleListEntry.getKey() + " " +doubleListEntry.getValue());
+        System.out.println("2 = "+doubleListEntry2.getKey() + " " +doubleListEntry2.getValue());
 //      System.out.println(doubleListEntry);
 
         List<EmployeeTwo> empList = new ArrayList<>();
@@ -152,7 +156,8 @@ public class Main {
 
         System.out.println("### Printing the List of Employee's Second Highest salary Record Based on Department:");
         Map<String, Optional<EmployeeTwo>> collect1 = empList.stream()
-                .collect(Collectors.groupingBy(EmployeeTwo::getDeptName, Collectors.collectingAndThen(Collectors.toList(), employeeTwos ->
+                .collect(Collectors.groupingBy(EmployeeTwo::getDeptName,
+                                                Collectors.collectingAndThen(Collectors.toList(), employeeTwos ->
                         employeeTwos.stream().sorted(Comparator.comparing(EmployeeTwo::getSalary).reversed()).skip(1).findFirst()
                 )));
 
