@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b9b94ebc-0616-44e1-8839-a3889001b123" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/RestApiConsumePractice/src/main/java/com/springBoot/RestApiConsumePractice/Controller/Client/WebClientConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SpringSecurityDemo/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SpringSecurityDemo/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SpringSecurityDemo/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SpringSecurityDemo/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SpringSecurityDemo/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SpringSecurityDemo/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SpringSecurityDemo/src/main/java/com/demoSpringSecurity/DemoSpringSecurityApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SpringSecurityDemo/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SpringSecurityDemo/src/test/java/com/demoSpringSecurity/DemoSpringSecurityApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/udemyDemoAPI-2/src/main/java/com/example/demo/Security/WebSecurity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RestApiConsumePractice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RestApiConsumePractice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RestApiConsumePractice/src/main/java/com/springBoot/RestApiConsumePractice/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RestApiConsumePractice/src/main/java/com/springBoot/RestApiConsumePractice/Controller/UserController.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2ftjC0MfwfdAuI2GT2nEpZp9N22" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.demo.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b9b94ebc-0616-44e1-8839-a3889001b123" name="Changes" comment="" />
+      <created>1714627138621</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1714627138621</updated>
+    </task>
+    <servers />
+  </component>
+</project>
