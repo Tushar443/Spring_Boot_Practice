@@ -173,6 +173,13 @@ public class Main {
             System.out.println("Department = "+s);
             System.out.println(employeeTwoStream.collect(Collectors.toList()));
         });
+
+        System.out.println("### Highest Salary by Department ###");
+        Map<String, Long> collect3 = empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getDeptName, Collectors.collectingAndThen(Collectors.toList(),
+                employeeTwos -> employeeTwos.stream().max(Comparator.comparing(EmployeeTwo::getSalary)).get().getSalary()
+        )));
+
+        System.out.println(collect3);
     }
 
     private static void NormalOpOnList() {
