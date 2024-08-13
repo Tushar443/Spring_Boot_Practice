@@ -1,9 +1,7 @@
-import java.sql.SQLOutput;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -12,8 +10,19 @@ public class Main {
     public static void main(String[] arg) {
 //        NormalOpOnList();
         //PerformStreamOperationOnStudent();
-        PerformStreamOperationOnEmployee();
-//        PerformStreamOnString();
+//        PerformStreamOperationOnEmployee();
+//        UsedOfFlatMap();
+        PerformStreamOnString();
+    }
+
+    private static void UsedOfFlatMap() {
+        int[][] arr = new int[][]{{1,2,3},{3,2,1}};
+        OptionalInt max = IntStream.range(0, arr.length).flatMap(value -> IntStream.of(IntStream.of(arr[value]).sum())).max();
+        System.out.println(max.getAsInt());
+
+        System.out.println("Find max");
+        int[] intArr = new int[]{2,3,5,1,3};
+        System.out.println(Arrays.stream(intArr).max().getAsInt());
     }
 
     private static void PerformStreamOnString() {
@@ -22,15 +31,23 @@ public class Main {
         String claus = String.valueOf(Stream.of(urls).skip(2).findFirst());
         System.out.println(claus);
         StringBuilder sb = new StringBuilder();
-//        String string = Stream.of(urls).limit(4).map(s -> {
-//            String s1 = (s == urls[3]) ? "00" + urls[3] : s + "/";
-//            return s1;
-//        }).collect(Collectors.joining());
+        String string2 = Stream.of(urls).limit(4).map(s -> {
+            String s1 = (s == urls[3]) ? "00" + urls[3] : s + "/";
+            return s1;
+        }).collect(Collectors.joining());
 
         String string = IntStream.range(0,urls.length)
                 .mapToObj(i -> i == 3 ? "00"+urls[i] : urls[i]+"/").collect(Collectors.joining());
 
         System.out.println(string);
+        String s = "is2 sentence4 This1 a3";
+        String[] arr = s.split(" ");
+        String collect = Stream.of(arr).sorted((s1, s2) -> {
+            int k1 = s1.charAt(s1.length() - 1) + '0';
+            int k2 = s2.charAt(s2.length() - 1) + '0';
+            return k1 - k2;
+        }).map(string1-> string1.substring(0,string1.length()-1)).collect(Collectors.joining(" "));
+        System.out.println(collect);
     }
 
     private static void PerformStreamOperationOnEmployee() {
@@ -137,6 +154,7 @@ public class Main {
         Map.Entry<Integer, List<EmployeeTwo>> integerListEntry = empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getYearOfJoining))
                 .entrySet().stream().min(Map.Entry.comparingByKey()).get();
 
+
         System.out.println(integerListEntry);
 
         System.out.println("### Printing Average and Total Salary of the Organization");
@@ -180,6 +198,27 @@ public class Main {
         )));
 
         System.out.println(collect3);
+
+        System.out.println("### sort map ###");
+        empList.stream().collect(Collectors.groupingBy(EmployeeTwo::getYearOfJoining,Collectors.counting()))//.entrySet().forEach(System.out::println);
+                .entrySet().stream().sorted(Map.Entry.comparingByValue()).forEach(System.out::println);
+
+        /**
+         *  Sort the HashMap on key in reversed
+         * HashMap<String,Integer> map = new HashMap<>();
+         *         for(int i = 0;i<names.length;i++){
+         *             map.put(names[i],heights[i]);
+         *         }
+         *         List<Map.Entry<String,Integer>> sorted = map.entrySet().stream()
+         *         .sorted(Map.Entry.comparingByValue((o1,o2)-> o2-o1)).toList();
+         *         sorted.forEach(System.out::println);
+         *         String[] st = new String[names.length];
+         *         int i = 0;
+         *         for(Map.Entry<String,Integer> s : sorted){
+         *             st[i++] = s.getKey();
+         *         }
+         *         return st;
+         */
     }
 
     private static void NormalOpOnList() {
