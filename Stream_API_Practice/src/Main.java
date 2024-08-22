@@ -10,9 +10,9 @@ public class Main {
     public static void main(String[] arg) {
 //        NormalOpOnList();
         //PerformStreamOperationOnStudent();
-//        PerformStreamOperationOnEmployee();
+        PerformStreamOperationOnEmployee();
 //        UsedOfFlatMap();
-        PerformStreamOnString();
+//        PerformStreamOnString();
     }
 
     private static void UsedOfFlatMap() {

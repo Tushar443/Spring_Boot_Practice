@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example.crudDemo</groupId>
-	<artifactId>RestAPIDemo</artifactId>
+	<artifactId>Exception_Db_Connection_2_Actuator_Db_manual_Config</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>RestAPIDemo</name>
 	<description>Demo project for Spring Boot</description>
@@ -49,6 +49,20 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 			<version>3.3.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.10.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 
 	</dependencies>
 
